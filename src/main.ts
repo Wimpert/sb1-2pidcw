@@ -68,6 +68,7 @@ interface Registration {
           <div
             class="transition ease-in-out delay-150 radio-option flex items-center border-t-8 bg-teal-300"
             *ngFor="let opt of movingOptions; let i = index"
+            (click)="moveOption($event, true)"
           >
             <input
               type="radio"

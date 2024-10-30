@@ -15,7 +15,7 @@ interface Registration {
   imports: [FormsModule, CommonModule],
   template: `
     <div class="container mx-auto p-4 max-w-lg">
-      <h1 class="text-2xl font-bold mb-4">Trot 2025 Inschrijving</h1>
+      <h1 class="text-lg font-bold mb-4">Trot 2025 Inschrijving</h1>
 
       <form (ngSubmit)="onSubmit()" class="space-y-4">
         <div class="form-group">
@@ -49,24 +49,24 @@ interface Registration {
         </div>
 
         <div class="options-container space-y-2">
-          <div class="radio-option flex items-center bg-teal-300">
+          <div
+            class="radio-option flex items-center bg-teal-300 rounded-lg p-3"
+          >
             <input
               type="radio"
               id="langLang"
               name="option"
               value="lang/lang"
               [(ngModel)]="registration.option"
-              class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
+              class="focus:ring-indigo-500 h-4 w-4 text-indigo-600"
             />
-            <label
-              for="langLang"
-              class="ml-3 block text-sm font-medium text-gray-700"
+            <label for="langLang" class="ml-3 block text-gray-700"
               >Lang/Lang</label
             >
           </div>
 
           <div
-            class="transition ease-in-out delay-150 radio-option flex items-center border-t-8 bg-teal-300"
+            class="transition ease-in-out delay-150 radio-option flex items-center bg-teal-300 rounded-lg p-3"
             *ngFor="let opt of movingOptions; let i = index"
             (click)="moveOption($event, true)"
           >
@@ -78,12 +78,12 @@ interface Registration {
               [(ngModel)]="registration.option"
               (mouseenter)="moveOption($event)"
               (change)="moveOption($event, true)"
-              class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
+              class="focus:ring-indigo-500 h-4 w-4 text-indigo-600"
             />
             <label
               [for]="'option' + i"
               (mouseenter)="moveOption($event)"
-              class="ml-3 block text-sm font-medium text-gray-700"
+              class="ml-3 block text-gray-700"
             >
               {{ opt }}
             </label>

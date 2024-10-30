@@ -128,6 +128,7 @@ export class App {
       const offsetX = (Math.random() - 0.5) * 500;
       const offsetY = (Math.random() - 0.5) * 500;
       radioOption.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
+      radioOption.setAttribute("selected", false.toString());
       setTimeout(() => {
         radioOption.style.transform = "translate(0, 0)";
       }, 500);

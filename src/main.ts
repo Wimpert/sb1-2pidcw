@@ -14,7 +14,7 @@ interface Registration {
   standalone: true,
   imports: [FormsModule, CommonModule],
   template: `
-    <div class="container mx-auto p-4">
+    <div class="container mx-auto p-4 max-w-lg">
       <h1 class="text-2xl font-bold mb-4">Trot 2025 Inschrijving</h1>
 
       <form (ngSubmit)="onSubmit()" class="space-y-4">
@@ -76,7 +76,7 @@ interface Registration {
               [value]="opt"
               [(ngModel)]="registration.option"
               (mouseenter)="moveOption($event)"
-              (select)="moveOption($event)"
+              (change)="moveOption($event)"
               class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
             />
             <label
@@ -123,16 +123,23 @@ export class App {
 
   moveOption(event: Event) {
     const element = event.target as HTMLElement;
-    const radioOption = element.closest(".radio-option") as HTMLElement;
-    if (radioOption && !radioOption.querySelector("#langLang")) {
+    const radioOptionDiv = element.closest(".radio-option") as HTMLElement;
+
+    if (radioOptionDiv && !radioOptionDiv.querySelector("#langLang")) {
       const offsetX = (Math.random() - 0.5) * 500;
       const offsetY = (Math.random() - 0.5) * 500;
-      radioOption.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
-      radioOption.setAttribute("selected", false.toString());
+      radioOptionDiv.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
       setTimeout(() => {
-        radioOption.style.transform = "translate(0, 0)";
+        this.registration.option = "lang/lang";
+      }, 100);
+      setTimeout(() => {
+        radioOptionDiv.style.transform = "translate(0, 0)";
       }, 500);
     }
+  }
+
+  select(event: Event) {
+    console.log("select");
   }
 
   isFormValid(): boolean {

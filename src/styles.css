@@ -1,0 +1,4 @@
+/* Add any custom global styles here */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

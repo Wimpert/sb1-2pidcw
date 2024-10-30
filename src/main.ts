@@ -76,7 +76,7 @@ interface Registration {
               [value]="opt"
               [(ngModel)]="registration.option"
               (mouseenter)="moveOption($event)"
-              (change)="moveOption($event)"
+              (change)="moveOption($event, true)"
               class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
             />
             <label
@@ -121,7 +121,7 @@ export class App {
   submitted = false;
   movingOptions = ["Kort/Lang", "Lang/Kort", "Kort/Kort"];
 
-  moveOption(event: Event) {
+  moveOption(event: Event, checked = false) {
     const element = event.target as HTMLElement;
     const radioOptionDiv = element.closest(".radio-option") as HTMLElement;
 
@@ -129,9 +129,13 @@ export class App {
       const offsetX = (Math.random() - 0.5) * 500;
       const offsetY = (Math.random() - 0.5) * 500;
       radioOptionDiv.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
-      setTimeout(() => {
-        this.registration.option = "lang/lang";
-      }, 100);
+      if (checked) {
+        this.registration.option = null as any as string;
+        setTimeout(() => {
+          this.registration.option = "lang/lang";
+        }, 500);
+      }
+
       setTimeout(() => {
         radioOptionDiv.style.transform = "translate(0, 0)";
       }, 500);

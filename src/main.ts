@@ -5,7 +5,7 @@ import { CommonModule } from "@angular/common";
 
 interface Registration {
   groupName: string;
-  participants: string;
+  participants: Array<string>;
   option: string;
 }
 
@@ -36,16 +36,28 @@ interface Registration {
           <label
             for="participants"
             class="block text-sm font-medium text-gray-700"
-            >Participant Names (one per line):</label
+            >Participant Names:</label
           >
-          <textarea
-            id="participants"
-            [(ngModel)]="registration.participants"
-            name="participants"
-            rows="5"
-            required
-            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-          ></textarea>
+          @for (participant of participants;track participant; let i = $index){
+          <div class="flexitems-center flex space-x-2">
+            <input
+              type="text"
+              [(ngModel)]="participants[i]"
+              name="participant{{ i }}"
+              placeholder="Deelnemer {{ i + 1 }}"
+              required
+              class="mt-1 grow border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm p-4"
+            />
+            <button
+              *ngIf="i === participants.length - 1 && participants.length < 10"
+              type="button"
+              (click)="addParticipant()"
+              class="text-indigo-600 hover:text-indigo-900"
+            >
+              +
+            </button>
+          </div>
+          }
         </div>
 
         <div class="options-container space-y-2">
@@ -61,7 +73,7 @@ interface Registration {
               class="focus:ring-indigo-500 h-4 w-4 text-indigo-600"
             />
             <label for="langLang" class="ml-3 block text-gray-700"
-              >Lang/Lang</label
+              >Lang Wandlen /Lang Fietsen</label
             >
           </div>
 
@@ -105,9 +117,10 @@ interface Registration {
         <p>Option: {{ registration.option }}</p>
         <h3 class="mt-4 text-lg font-semibold">Participants:</h3>
         <ul class="list-disc list-inside">
-          <li *ngFor="let participant of getParticipantsList()">
-            {{ participant }}
-          </li>
+          @for (participant of participants; track participant; let i = $index)
+          {
+          <li>{{ i }}: {{ participant }}</li>
+          }
         </ul>
       </div>
     </div>
@@ -116,11 +129,22 @@ interface Registration {
 export class App {
   registration: Registration = {
     groupName: "",
-    participants: "",
+    participants: [],
     option: "",
   };
   submitted = false;
-  movingOptions = ["Kort/Lang", "Lang/Kort", "Kort/Kort"];
+  movingOptions = [
+    "Kort wandelen /Lang fietsen",
+    "Lang wandelen /Kort fietsen",
+    "Kort fietsen /Kort wandelen",
+  ];
+  participants: string[] = ["", "", "", ""];
+
+  addParticipant() {
+    if (this.participants.length < 10) {
+      this.participants.push("");
+    }
+  }
 
   moveOption(event: Event, checked = false) {
     const element = event.target as HTMLElement;
@@ -150,20 +174,18 @@ export class App {
   isFormValid(): boolean {
     return (
       this.registration.groupName.trim() !== "" &&
-      this.registration.participants.trim() !== "" &&
+      this.participants.every((name) => name.trim() !== "") &&
       this.registration.option === "lang/lang"
     );
   }
 
-  getParticipantsList(): string[] {
-    return this.registration.participants
-      .split("\n")
-      .map((name) => name.trim())
-      .filter((name) => name !== "");
-  }
+  // getParticipantsList(): string[] {
+  //   return this.participants;
+  // }
 
   onSubmit() {
     if (this.isFormValid()) {
+      this.registration.participants = this.participants;
       this.submitted = true;
       console.log("Registration submitted:", this.registration);
     }

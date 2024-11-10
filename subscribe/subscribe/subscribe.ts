@@ -1,7 +1,7 @@
 import { Handler } from "@netlify/functions";
 import sgMail from "@sendgrid/mail";
 
-sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+sgMail.setApiKey(process.env.NETLIFY_EMAILS_PROVIDER_API_KEY);
 
 export const handler: Handler = async (event, context) => {
   if (event.httpMethod !== "POST") {

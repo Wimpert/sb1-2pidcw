@@ -30,6 +30,7 @@ export const handler: Handler = async (event, context) => {
       body: JSON.stringify({ message: "Email sent successfully" }),
     };
   } catch (error) {
+    console.log("apikey", process.env.NETLIFY_EMAILS_PROVIDER_API_KEY);
     console.log("error", error);
     return {
       statusCode: 500,

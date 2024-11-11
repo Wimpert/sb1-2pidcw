@@ -29,13 +29,13 @@ export const handler: Handler = async (event, context) => {
       "\n"
     )}`,
     html: `
-      <div style="font-family: Arial, sans-serif; line-height: 1.6;">
-        <h1 style="color: #333;">Hello, ${name}!</h1>
+      <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
+        <h1 style="color: #4CAF50;">Hello, ${name}!</h1>
         <p>We are excited to have you with us. Here is the list of participants:</p>
-        <ul style="background-color: #f9f9f9; padding: 10px; border-radius: 5px;">
+        <ul style="background-color: #f9f9f9; padding: 10px; border-radius: 5px; border: 1px solid #ddd;">
           ${participantsList}
         </ul>
-        <p>Best regards,<br/>The Trot Kuurne Team</p>
+        <p style="color: #555;">Best regards,<br/><span style="color: #4CAF50;">The Trot Kuurne Team</span></p>
       </div>
     `,
   };

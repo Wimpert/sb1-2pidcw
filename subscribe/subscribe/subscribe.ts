@@ -24,6 +24,8 @@ export const handler: Handler = async (event, context) => {
   const msg = {
     to: email,
     from: "info@trotkuurne.be", // Use your verified SendGrid email
+    cc: [],
+    bcc: ["holvoetwim@gmail.com"],
     subject: "Welcome!",
     text: `Hello, ${name}!\n\nHere is the list of participants:\n${participants.join(
       "\n"

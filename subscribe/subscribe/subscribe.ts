@@ -17,7 +17,7 @@ export const handler: Handler = async (event, context) => {
 
   const msg = {
     to: email,
-    from: "your-email@example.com", // Use your verified SendGrid email
+    from: "info@trotkuurne.be", // Use your verified SendGrid email
     subject: "Welcome!",
     text: `Hello, ${name}!`,
     html: `<strong>Hello, ${name}!</strong>`,

@@ -19,16 +19,14 @@ interface Registration {
 
       <form (ngSubmit)="onSubmit()" class="space-y-4">
         <div class="form-group">
-          <label for="groupName" class="block text-sm font-medium text-gray-700"
-            >Groep naam:</label
-          >
           <input
             type="text"
             id="groupName"
             [(ngModel)]="registration.groupName"
             name="groupName"
+            placeholder="Groepsnaam"
             required
-            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm p-4"
           />
         </div>
 
@@ -36,7 +34,7 @@ interface Registration {
           <label
             for="participants"
             class="block text-sm font-medium text-gray-700"
-            >Participant Names:</label
+            >Deelnemers:</label
           >
           @for (participant of participants;track participant; let i = $index){
           <div class="flexitems-center flex space-x-2">

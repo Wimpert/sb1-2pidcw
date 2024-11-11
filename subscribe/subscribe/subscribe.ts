@@ -11,16 +11,33 @@ export const handler: Handler = async (event, context) => {
     };
   }
 
-  const { email = "holvoetwim@gmail.com", name = "stranger" } = JSON.parse(
-    event.body
-  );
+  const {
+    email = "holvoetwim@gmail.com",
+    name = "stranger",
+    participants = [],
+  } = JSON.parse(event.body);
+
+  const participantsList = participants
+    .map((participant: string) => `<li>${participant}</li>`)
+    .join("");
 
   const msg = {
     to: email,
     from: "info@trotkuurne.be", // Use your verified SendGrid email
     subject: "Welcome!",
-    text: `Hello, ${name}!`,
-    html: `<strong>Hello, ${name}!</strong>`,
+    text: `Hello, ${name}!\n\nHere is the list of participants:\n${participants.join(
+      "\n"
+    )}`,
+    html: `
+      <div style="font-family: Arial, sans-serif; line-height: 1.6;">
+        <h1 style="color: #333;">Hello, ${name}!</h1>
+        <p>We are excited to have you with us. Here is the list of participants:</p>
+        <ul style="background-color: #f9f9f9; padding: 10px; border-radius: 5px;">
+          ${participantsList}
+        </ul>
+        <p>Best regards,<br/>The Trot Kuurne Team</p>
+      </div>
+    `,
   };
 
   try {

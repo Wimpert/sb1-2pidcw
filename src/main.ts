@@ -2,9 +2,13 @@ import { Component } from "@angular/core";
 import { bootstrapApplication } from "@angular/platform-browser";
 import { FormsModule } from "@angular/forms";
 import { CommonModule } from "@angular/common";
+import { provideHttpClient, withFetch } from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 
 interface Registration {
   groupName: string;
+  name: string;
+  email: string;
   participants: Array<string>;
   option: string;
 }
@@ -13,6 +17,7 @@ interface Registration {
   selector: "app-root",
   standalone: true,
   imports: [FormsModule, CommonModule],
+  providers: [],
   template: `
     <div class="container mx-auto p-4 max-w-lg">
       <h1 class="text-lg font-bold mb-4">Trot 2025 Inschrijving</h1>
@@ -31,23 +36,51 @@ interface Registration {
         </div>
 
         <div class="form-group">
+          <input
+            type="text"
+            id="email"
+            [(ngModel)]="registration.email"
+            name="email"
+            placeholder="email"
+            required
+            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm p-4"
+          />
+        </div>
+
+        <div class="form-group">
+          <input
+            type="text"
+            id="name"
+            [(ngModel)]="registration.name"
+            name="name"
+            placeholder="Uw naam"
+            required
+            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm p-4"
+          />
+        </div>
+
+        <div class="form-group">
           <label
             for="participants"
             class="block text-sm font-medium text-gray-700"
             >Deelnemers:</label
           >
-          @for (participant of participants;track participant; let i = $index){
+          @for (participant of registration.participants; track participant; let
+          i = $index){
           <div class="flexitems-center flex space-x-2">
             <input
               type="text"
-              [(ngModel)]="participants[i]"
+              [(ngModel)]="registration.participants[i]"
               name="participant{{ i }}"
               placeholder="Deelnemer {{ i + 1 }}"
               required
               class="mt-1 grow border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm p-4"
             />
             <button
-              *ngIf="i === participants.length - 1 && participants.length < 10"
+              *ngIf="
+                i === this.registration.participants.length - 1 &&
+                this.registration.participants.length < 10
+              "
               type="button"
               (click)="addParticipant()"
               class="text-indigo-600 hover:text-indigo-900"
@@ -56,6 +89,7 @@ interface Registration {
             </button>
           </div>
           }
+          {{ this.registration.participants }}
         </div>
 
         <div class="options-container space-y-2">
@@ -71,7 +105,7 @@ interface Registration {
               class="focus:ring-indigo-500 h-4 w-4 text-indigo-600"
             />
             <label for="langLang" class="ml-3 block text-gray-700"
-              >Lang Wandlen /Lang Fietsen</label
+              >Lang Wandelen /Lang Fietsen</label
             >
           </div>
 
@@ -110,14 +144,16 @@ interface Registration {
       </form>
 
       <div *ngIf="submitted" class="mt-6">
-        <h2 class="text-xl font-bold">Registration Successful!</h2>
-        <p class="mt-2">Group: {{ registration.groupName }}</p>
-        <p>Option: {{ registration.option }}</p>
-        <h3 class="mt-4 text-lg font-semibold">Participants:</h3>
+        <h2 class="text-xl font-bold">Inschrijving succesvol!</h2>
+        <span>We stuurden een email naar {{ registration.email }}</span>
+        <p class="mt-2">Groep: {{ registration.groupName }}</p>
+        <p>type trot:: {{ registration.option }}</p>
+        <h3 class="mt-4 text-lg font-semibold">Deelnemers:</h3>
         <ul class="list-disc list-inside">
-          @for (participant of participants; track participant; let i = $index)
-          {
-          <li>{{ i }}: {{ participant }}</li>
+          <li>{{ registration.name }}</li>
+          @for (participant of registration.participants; track participant; let
+          i = $index) {
+          <li>{{ participant }}</li>
           }
         </ul>
       </div>
@@ -127,8 +163,10 @@ interface Registration {
 export class App {
   registration: Registration = {
     groupName: "",
-    participants: [],
+    email: "",
+    participants: [""],
     option: "",
+    name: "",
   };
   submitted = false;
   movingOptions = [
@@ -136,11 +174,12 @@ export class App {
     "Lang wandelen /Kort fietsen",
     "Kort fietsen /Kort wandelen",
   ];
-  participants: string[] = ["", "", "", ""];
+
+  constructor(private http: HttpClient) {}
 
   addParticipant() {
-    if (this.participants.length < 10) {
-      this.participants.push("");
+    if (this.registration.participants.length < 10) {
+      this.registration.participants.push("");
     }
   }
 
@@ -165,29 +204,31 @@ export class App {
     }
   }
 
-  select(event: Event) {
-    console.log("select");
-  }
-
   isFormValid(): boolean {
     return (
       this.registration.groupName.trim() !== "" &&
-      this.participants.every((name) => name.trim() !== "") &&
+      this.registration.participants.every((name) => name.trim() !== "") &&
       this.registration.option === "lang/lang"
     );
   }
 
-  // getParticipantsList(): string[] {
-  //   return this.participants;
-  // }
-
   onSubmit() {
     if (this.isFormValid()) {
-      this.registration.participants = this.participants;
-      this.submitted = true;
-      console.log("Registration submitted:", this.registration);
+      this.http
+        .post("/.netlify/functions/subscribe", this.registration)
+        .subscribe(
+          (response) => {
+            console.log("Server response:", response);
+            this.submitted = true;
+          },
+          (error) => {
+            console.error("Error:", error);
+          }
+        );
     }
   }
 }
 
-bootstrapApplication(App);
+bootstrapApplication(App, {
+  providers: [provideHttpClient()],
+});

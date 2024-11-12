@@ -20,7 +20,7 @@ interface Registration {
   providers: [],
   template: `
     <div class="container mx-auto p-4 max-w-lg">
-      <h1 class="text-lg font-bold mb-4">Trot 2025 Inschrijving</h1>
+      <h1 class="text-xl font-bold mb-4">Trot 2025 Inschrijving</h1>
 
       <form (ngSubmit)="onSubmit()" class="space-y-4">
         <div class="form-group">
@@ -65,8 +65,8 @@ interface Registration {
             class="block text-sm font-medium text-gray-700"
             >Deelnemers:</label
           >
-          @for (participant of registration.participants; track participant; let
-          i = $index){
+          @for (participant of registration.participants; track $index; let i =
+          $index){
           <div class="flexitems-center flex space-x-2">
             <input
               type="text"
@@ -76,23 +76,20 @@ interface Registration {
               required
               class="mt-1 grow border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm p-4"
             />
-            <button
-              *ngIf="
-                i === this.registration.participants.length - 1 &&
-                this.registration.participants.length < 10
-              "
-              type="button"
-              (click)="addParticipant()"
-              class="text-indigo-600 hover:text-indigo-900"
-            >
-              +
-            </button>
           </div>
           }
-          {{ this.registration.participants }}
+          <button
+            *ngIf="this.registration.participants.length < 10"
+            type="button"
+            (click)="addParticipant()"
+            class="text-indigo-600 hover:text-indigo-900 underline mt-2"
+          >
+            Voeg een deelnemer toe
+          </button>
         </div>
 
         <div class="options-container space-y-2">
+          <h1 class="text-lg font-bold mb-4">Kies het type trot:</h1>
           <div
             class="radio-option flex items-center bg-teal-300 rounded-lg p-3"
           >
@@ -139,7 +136,7 @@ interface Registration {
           class="mt-4 w-full inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
           [disabled]="!isFormValid()"
         >
-          Register
+          Schrijf in
         </button>
       </form>
 

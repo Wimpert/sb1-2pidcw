@@ -7,7 +7,6 @@ import { HttpClient } from "@angular/common/http";
 
 interface Registration {
   groupName: string;
-  name: string;
   email: string;
   participants: Array<string>;
   option: string;
@@ -48,23 +47,11 @@ interface Registration {
         </div>
 
         <div class="form-group">
-          <input
-            type="text"
-            id="name"
-            [(ngModel)]="registration.name"
-            name="name"
-            placeholder="Uw naam"
-            required
-            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm p-4"
-          />
-        </div>
-
-        <div class="form-group">
           <label
             for="participants"
             class="block text-sm font-medium text-gray-700"
-            >Deelnemers:</label
-          >
+            >Vul hier de lijst met deelnemers aan:
+          </label>
           @for (participant of registration.participants; track $index; let i =
           $index){
           <div class="flexitems-center flex space-x-2">
@@ -102,7 +89,7 @@ interface Registration {
               class="focus:ring-indigo-500 h-4 w-4 text-indigo-600"
             />
             <label for="langLang" class="ml-3 block text-gray-700"
-              >Lang Wandelen /Lang Fietsen</label
+              >Lang Wandelen / Lang Fietsen</label
             >
           </div>
 
@@ -144,10 +131,9 @@ interface Registration {
         <h2 class="text-xl font-bold">Inschrijving succesvol!</h2>
         <span>We stuurden een email naar {{ registration.email }}</span>
         <p class="mt-2">Groep: {{ registration.groupName }}</p>
-        <p>type trot:: {{ registration.option }}</p>
+        <p>Type trot: {{ registration.option }}</p>
         <h3 class="mt-4 text-lg font-semibold">Deelnemers:</h3>
         <ul class="list-disc list-inside">
-          <li>{{ registration.name }}</li>
           @for (participant of registration.participants; track participant; let
           i = $index) {
           <li>{{ participant }}</li>
@@ -163,13 +149,12 @@ export class App {
     email: "",
     participants: [""],
     option: "",
-    name: "",
   };
   submitted = false;
   movingOptions = [
-    "Kort wandelen /Lang fietsen",
-    "Lang wandelen /Kort fietsen",
-    "Kort fietsen /Kort wandelen",
+    "Kort wandelen / Lang fietsen",
+    "Lang wandelen / Kort fietsen",
+    "Kort wandelen / Kort fietsen",
   ];
 
   constructor(private http: HttpClient) {}
@@ -219,6 +204,9 @@ export class App {
             this.submitted = true;
           },
           (error) => {
+            alert(
+              "Er ging iets mis, probeer opnieuw. Indien inschrijven niet lukt, stuur dan een mail naar info@trotkuurne.be"
+            );
             console.error("Error:", error);
           }
         );

@@ -15,7 +15,6 @@ export const handler: Handler = async (event, context) => {
 
   const {
     email = "holvoetwim@gmail.com",
-    name = "",
     participants = [],
     groupName = "",
     keuze = "",
@@ -30,13 +29,13 @@ export const handler: Handler = async (event, context) => {
     from: "info@trotkuurne.be", // Use your verified SendGrid email
     cc: [],
     bcc: ["holvoetwim@gmail.com"],
-    subject: `Welcome, Kameraaden van de ${groupName}!`,
+    subject: `Welkom, Kameraaden van de ${groupName}!`,
     // text: `Hallo, ${name}!\n\nHere is the list of participants:\n${participants.join(
     //   "\n"
     // )}`,
     html: `
       <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
-        <h1 style="color: #4CAF50;">Hello, ${name}!</h1>
+        <h1 style="color: #4CAF50;">Hallo, ${groupName}!</h1>
         <p>Bedankt voor je inschrijving voor de trot 2025, je koos voor ${keuze}, heel moedig. </p>
         <ul style="background-color: #f9f9f9; padding: 10px; border-radius: 5px; border: 1px solid #ddd;">
           ${participantsList}

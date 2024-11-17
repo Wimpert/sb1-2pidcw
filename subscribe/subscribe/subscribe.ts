@@ -42,7 +42,7 @@ export const handler: Handler = async (event, context) => {
         <ul style="background-color: #f9f9f9; padding: 10px; border-radius: 5px; border: 1px solid #ddd;">
           ${participantsList}
         </ul>
-        <p style="color: #555;">Best regards,<br/><span style="color: #4CAF50;">De Vitamindjes</span></p>
+        <p style="color: #555;">Best regards,<br/><span style="color: #4CAF50;">De Vitamindjes en Snak en bete.</span></p>
       </div>
     `,
   };

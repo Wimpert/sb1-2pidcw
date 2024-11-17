@@ -5,6 +5,7 @@ import { CommonModule } from "@angular/common";
 import { provideHttpClient, withFetch } from "@angular/common/http";
 import { HttpClient } from "@angular/common/http";
 import { BinComponent } from "./components/bin.component";
+import { tap } from "rxjs";
 
 interface Registration {
   groupName: string;
@@ -189,6 +190,7 @@ export class App {
     phone: "",
   };
   submitted = false;
+  submitting = false;
   movingOptions = [
     "Kort wandelen / Lang fietsen",
     "Lang wandelen / Kort fietsen",
@@ -243,13 +245,15 @@ export class App {
   }
 
   onSubmit() {
-    if (this.isFormValid()) {
+    if (this.isFormValid() && !this.submitting) {
       this.http
         .post("/.netlify/functions/subscribe", this.registration)
+        .pipe(tap((_) => (this.submitting = true)))
         .subscribe(
           (response) => {
             console.log("Server response:", response);
             this.submitted = true;
+            this.submitting = false;
           },
           (error) => {
             alert(

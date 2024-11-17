@@ -8,6 +8,7 @@ import { HttpClient } from "@angular/common/http";
 interface Registration {
   groupName: string;
   email: string;
+  phone: string;
   participants: Array<string>;
   option: string;
 }
@@ -18,10 +19,20 @@ interface Registration {
   imports: [FormsModule, CommonModule],
   providers: [],
   template: `
-    <div class="container mx-auto p-4 max-w-lg">
-      <h1 class="text-xl font-bold mb-4">Trot 2025 Inschrijving</h1>
+    <div class="container mx-auto p-4 max-w-lg text-sky-800">
+      <h1 class="text-xl font-bold mb-4">Trot 20in25 Inschrijving:</h1>
 
-      <form (ngSubmit)="onSubmit()" class="space-y-4">
+      <span class="text-sm">
+        Schrijf je groep in voor Trot 20in25. We beperken ons tot groepen van
+        maximum 6 deelnemers. Vergeet ook zeker niet je type trot te selecteren.
+        <strong
+          >De inschrijving is pas geldig na het invullen van dit formulier en
+          het overschrijven van XX euro op rekening nummer BEXX XXXX XXXX
+          XXXX</strong
+        ></span
+      >
+
+      <form (ngSubmit)="onSubmit()" class="pt-4 space-y-3">
         <div class="form-group">
           <input
             type="text"
@@ -30,7 +41,7 @@ interface Registration {
             name="groupName"
             placeholder="Groepsnaam"
             required
-            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm p-4"
+            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm p-2"
           />
         </div>
 
@@ -42,7 +53,19 @@ interface Registration {
             name="email"
             placeholder="email"
             required
-            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm p-4"
+            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm p-2"
+          />
+        </div>
+
+        <div class="form-group">
+          <input
+            type="text"
+            id="phone"
+            [(ngModel)]="registration.phone"
+            name="phone"
+            placeholder="gsm nummer"
+            required
+            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm p-2"
           />
         </div>
 
@@ -61,7 +84,7 @@ interface Registration {
               name="participant{{ i }}"
               placeholder="Deelnemer {{ i + 1 }}"
               required
-              class="mt-1 grow border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm p-4"
+              class="mt-1 grow border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm p-2"
             />
           </div>
           }
@@ -149,6 +172,7 @@ export class App {
     email: "",
     participants: [""],
     option: "",
+    phone: "",
   };
   submitted = false;
   movingOptions = [
@@ -160,7 +184,7 @@ export class App {
   constructor(private http: HttpClient) {}
 
   addParticipant() {
-    if (this.registration.participants.length < 10) {
+    if (this.registration.participants.length < 5) {
       this.registration.participants.push("");
     }
   }

@@ -87,7 +87,7 @@ interface Registration {
               type="text"
               [(ngModel)]="registration.participants[i]"
               name="participant{{ i }}"
-              placeholder="Deelnemer {{ i + 1 }}"
+              placeholder="Deelnemer {{ i + 1 }} (Voor- en achternaam)"
               class="mt-1 grow border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm p-2"
             />
             <app-trot-bin (delete)="removeParticipant(i)" />

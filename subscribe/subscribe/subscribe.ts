@@ -31,7 +31,7 @@ export const handler: Handler = async (event, context) => {
   console.log("event.body", event.body);
 
   const {
-    email = "holvoetwim@gmail.com",
+    email = "",
     participants = [],
     groupName = "",
     keuze = "",
@@ -49,9 +49,7 @@ export const handler: Handler = async (event, context) => {
     const client = await connectToDatabase(
       process.env.MONGODB_CONNECTION_STRING as string
     );
-    console.log('saving to database":');
     const db = await client.db("trot-subscriptions");
-    console.log("got db");
     db.collection("subscription").insertOne({
       email,
       participants,
@@ -61,7 +59,6 @@ export const handler: Handler = async (event, context) => {
       comments,
       created: new Date(),
     });
-    console.log("saved to database");
   } catch (error) {
     console.log("error", error);
   }
@@ -69,9 +66,8 @@ export const handler: Handler = async (event, context) => {
   const msg = {
     to: email,
     from: "info@trotkuurne.be", // Use your verified SendGrid email
-    cc: [],
-    bcc: ["holvoetwim@gmail.com"],
-    subject: `Welkom, Kameraaden van de ${groupName}!`,
+    bcc: ["arne.quartier@hotmail.com", "holvoetwim@gmail.com"],
+    subject: `Welkom, Kameraden van de ${groupName}!`,
     html: `
       <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
         <h1 style="color: #4CAF50;">Hallo, ${groupName}!</h1>
@@ -95,8 +91,6 @@ export const handler: Handler = async (event, context) => {
       body: JSON.stringify({ message: "Email sent successfully" }),
     };
   } catch (error) {
-    console.log("apikey", process.env.NETLIFY_EMAILS_PROVIDER_API_KEY);
-    console.log("error", error);
     return {
       statusCode: 500,
       body: JSON.stringify({

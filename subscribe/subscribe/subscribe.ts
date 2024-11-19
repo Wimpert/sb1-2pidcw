@@ -12,6 +12,7 @@ async function connectToDatabase(uri: string) {
     return cachedClient;
   }
   console.log("=> creating new database connection");
+  console.log("we are using uri", uri);
   const client = await MongoClient.connect(uri, {});
   console.log("=> new database connection created");
   cachedClient = client;

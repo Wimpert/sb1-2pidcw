@@ -13,6 +13,7 @@ interface Registration {
   phone: string;
   participants: Array<string>;
   option: string;
+  comments?: string | null;
 }
 
 @Component({
@@ -103,6 +104,16 @@ interface Registration {
         </div>
 
         <div class="options-container space-y-2">
+          <textarea
+            [(ngModel)]="registration.comments"
+            name="comments"
+            placeholder="Vul hier eventuele opmerkingen in. Bv. allergieën, dieetwensen, ..."
+            class="block  p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 "
+          >
+          </textarea>
+        </div>
+
+        <div class="options-container space-y-2">
           <h1 class="text-lg font-bold mb-4">Kies het type trot:</h1>
           <div
             class="radio-option flex items-center rounded-lg p-2"
@@ -188,6 +199,7 @@ export class App {
     participants: [""],
     option: "",
     phone: "",
+    comments: null,
   };
   submitted = false;
   submitting = false;

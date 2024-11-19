@@ -25,7 +25,7 @@ interface Registration {
     <div class="container mx-auto p-4 max-w-lg text-sky-800">
       @if (!submitted) {
 
-      <h1 class="text-xl font-bold mb-4">Trot 20in25 Inschrijving:</h1>
+      <h1 class="text-xl font-bold mb-4">Trot 20-in-25 Inschrijving:</h1>
 
       <span class="text-sm">
         Schrijf je groep in voor Trot 20in25. We beperken ons tot groepen van
@@ -33,7 +33,7 @@ interface Registration {
         <strong
           >De inschrijving is pas geldig na het invullen van dit formulier en
           het overschrijven van €73,30 + €6 administrative kosten pp op rekening
-          nummer BEXX XXXX XXXX XXXX</strong
+          nummer BE75 0688 9166 5251.</strong
         ></span
       >
 

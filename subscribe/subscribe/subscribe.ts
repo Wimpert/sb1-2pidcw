@@ -8,15 +8,10 @@ let cachedClient: MongoClient | null = null;
 
 async function connectToDatabase(uri: string) {
   if (cachedClient) {
-    console.log("=> using cached database connection");
     return cachedClient;
   }
-  console.log("=> creating new database connection");
-  console.log("we are using uri", uri);
   const client = await MongoClient.connect(uri, {});
-  console.log("=> new database connection created");
   cachedClient = client;
-  console.log("=> cachedClient", cachedClient);
   return client;
 }
 
@@ -28,13 +23,11 @@ export const handler: Handler = async (event, context) => {
     };
   }
 
-  console.log("event.body", event.body);
-
   const {
     email = "",
     participants = [],
     groupName = "",
-    keuze = "",
+    option = "",
     phone = "",
     comments = "",
   } = JSON.parse(event.body);
@@ -54,7 +47,7 @@ export const handler: Handler = async (event, context) => {
       email,
       participants,
       groupName,
-      keuze,
+      option,
       phone,
       comments,
       created: new Date(),
@@ -71,8 +64,8 @@ export const handler: Handler = async (event, context) => {
     html: `
       <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
         <h1 style="color: #4CAF50;">Hallo, ${groupName}!</h1>
-        <p>Bedankt voor je inschrijving voor de trot 2025, je koos voor ${keuze}, heel moedig. </p>
-        <p>Je inschrijving is in goede orde ontvangen. De inschrijving is pas definitief na het overschrijven van €73,30 + €6 administrative kosten pp (voor jullie €${totalAmount}) op rekeningnummer BEXX XXXX XXXX XXXX.</p>
+        <p>Bedankt voor je inschrijving voor de trot 2025, je koos voor ${option}, heel moedig. </p>
+        <p>Je inschrijving is in goede orde ontvangen. De inschrijving is pas definitief na het overschrijven van €73,30 + €6 administrative kosten pp (voor jullie €${totalAmount}) op rekeningnummer  BE75 0688 9166 5251.</p>
         <p>telefoonnummer: ${phone}
         <ul style="background-color: #f9f9f9; padding: 10px; border-radius: 5px; border: 1px solid #ddd;">
           ${participantsList}

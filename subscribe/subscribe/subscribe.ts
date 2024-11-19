@@ -27,7 +27,7 @@ export const handler: Handler = async (event, context) => {
     .map((participant: string) => `<li>${participant}</li>`)
     .join("");
 
-  const totalAmount = (79.3 + 6) * participants.length;
+  const totalAmount = (73.3 + 6) * participants.length;
 
   try {
     // we are going to save it to the mongodb
@@ -61,7 +61,7 @@ export const handler: Handler = async (event, context) => {
       <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
         <h1 style="color: #4CAF50;">Hallo, ${groupName}!</h1>
         <p>Bedankt voor je inschrijving voor de trot 2025, je koos voor ${keuze}, heel moedig. </p>
-        <p>Je inschrijving is in goede orde ontvangen. De inschrijving is pas definitief na het overschrijven van €79,30 + €6 administrative kosten pp (voor jullie €${totalAmount}) op rekeningnummer BEXX XXXX XXXX XXXX.</p>
+        <p>Je inschrijving is in goede orde ontvangen. De inschrijving is pas definitief na het overschrijven van €73,30 + €6 administrative kosten pp (voor jullie €${totalAmount}) op rekeningnummer BEXX XXXX XXXX XXXX.</p>
         <p>telefoonnummer: ${phone}
         <ul style="background-color: #f9f9f9; padding: 10px; border-radius: 5px; border: 1px solid #ddd;">
           ${participantsList}

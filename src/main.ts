@@ -167,10 +167,13 @@ interface Registration {
 
         <button
           type="submit"
-          class="mt-4 w-full inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-          [disabled]="!isFormValid()"
+          class="mt-4 w-full inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white"
+          [ngClass]="
+            submitting ? 'bg-gray-400' : 'bg-indigo-600 hover:bg-indigo-700'
+          "
+          [disabled]="!isFormValid() || submitting"
         >
-          Schrijf in
+          {{ submitting ? "We schrijven je in" : "Schrijf in" }}
         </button>
       </form>
 
@@ -258,6 +261,7 @@ export class App {
 
   onSubmit() {
     if (this.isFormValid() && !this.submitting) {
+      this.submitting = true;
       this.http
         .post("/.netlify/functions/subscribe", this.registration)
         .pipe(tap((_) => (this.submitting = true)))
@@ -272,6 +276,7 @@ export class App {
               "Er ging iets mis, probeer opnieuw. Indien inschrijven niet lukt, stuur dan een mail naar info@trotkuurne.be"
             );
             console.error("Error:", error);
+            this.submitting = false;
           }
         );
     }

@@ -79,7 +79,8 @@ export const handler: Handler = async (event, context) => {
         </ul>
         <p>Opmerkingen:</p>
         <p>${comments}</p>
-        <p style="color: #555;">Best regards,<br/><span style="color: #4CAF50;">De Vitamindjes en Snak en bete.</span></p>
+        <p>Wij kijken er alvast naar uit om jullie te mogen verwelkomen op de trot! Verdere info volgt.</p>
+        <p style="color: #555;">Met trotterige groeten,<br/><span style="color: #4CAF50;">De Vitamindjes en Snak en bete.</span></p>
       </div>
     `,
   };

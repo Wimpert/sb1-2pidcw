@@ -1,5 +1,6 @@
 import { Handler } from "@netlify/functions";
 import sgMail from "@sendgrid/mail";
+import { MongoClient } from "mongodb";
 
 sgMail.setApiKey(process.env.NETLIFY_EMAILS_PROVIDER_API_KEY);
 
@@ -19,6 +20,7 @@ export const handler: Handler = async (event, context) => {
     groupName = "",
     keuze = "",
     phone = "",
+    comments = "",
   } = JSON.parse(event.body);
 
   const participantsList = participants
@@ -26,6 +28,28 @@ export const handler: Handler = async (event, context) => {
     .join("");
 
   const totalAmount = (79.3 + 6) * participants.length;
+
+  try {
+    // we are going to save it to the mongodb
+    // the connection string is in the env variable name  MONGODB_CONNECTION_STRING
+    const client = await MongoClient.connect(
+      process.env.MONGODB_CONNECTION_STRING as string,
+      {}
+    );
+
+    const db = await client.db("trot-subscriptions");
+    db.collection("subscription").insertOne({
+      email,
+      participants,
+      groupName,
+      keuze,
+      phone,
+      comments,
+      created: new Date(),
+    });
+  } catch (error) {
+    console.log("error", error);
+  }
 
   const msg = {
     to: email,
@@ -42,6 +66,8 @@ export const handler: Handler = async (event, context) => {
         <ul style="background-color: #f9f9f9; padding: 10px; border-radius: 5px; border: 1px solid #ddd;">
           ${participantsList}
         </ul>
+        <p>Opmerkingen:</p>
+        <p>${comments}</p>
         <p style="color: #555;">Best regards,<br/><span style="color: #4CAF50;">De Vitamindjes en Snak en bete.</span></p>
       </div>
     `,

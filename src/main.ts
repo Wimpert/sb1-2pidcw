@@ -32,7 +32,7 @@ interface Registration {
         maximum 6 deelnemers. Vergeet ook zeker niet je type trot te selecteren.
         <strong
           >De inschrijving is pas geldig na het invullen van dit formulier en
-          het overschrijven van €79,30 + €6 administrative kosten pp op rekening
+          het overschrijven van €73,30 + €6 administrative kosten pp op rekening
           nummer BEXX XXXX XXXX XXXX</strong
         ></span
       >

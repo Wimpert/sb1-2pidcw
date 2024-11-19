@@ -4,6 +4,21 @@ import { MongoClient } from "mongodb";
 
 sgMail.setApiKey(process.env.NETLIFY_EMAILS_PROVIDER_API_KEY);
 
+let cachedClient: MongoClient | null = null;
+
+async function connectToDatabase(uri: string) {
+  if (cachedClient) {
+    console.log("=> using cached database connection");
+    return cachedClient;
+  }
+  console.log("=> creating new database connection");
+  const client = await MongoClient.connect(uri, {});
+  console.log("=> new database connection created");
+  cachedClient = client;
+  console.log("=> cachedClient", cachedClient);
+  return client;
+}
+
 export const handler: Handler = async (event, context) => {
   if (event.httpMethod !== "POST") {
     return {
@@ -30,14 +45,12 @@ export const handler: Handler = async (event, context) => {
   const totalAmount = (73.3 + 6) * participants.length;
 
   try {
-    // we are going to save it to the mongodb
-    // the connection string is in the env variable name  MONGODB_CONNECTION_STRING
-    const client = await MongoClient.connect(
-      process.env.MONGODB_CONNECTION_STRING as string,
-      {}
+    const client = await connectToDatabase(
+      process.env.MONGODB_CONNECTION_STRING as string
     );
-
+    console.log('saving to database":');
     const db = await client.db("trot-subscriptions");
+    console.log("got db");
     db.collection("subscription").insertOne({
       email,
       participants,
@@ -47,6 +60,7 @@ export const handler: Handler = async (event, context) => {
       comments,
       created: new Date(),
     });
+    console.log("saved to database");
   } catch (error) {
     console.log("error", error);
   }

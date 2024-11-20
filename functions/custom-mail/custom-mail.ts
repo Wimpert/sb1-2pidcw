@@ -15,7 +15,7 @@ export const handler: Handler = async (event, context) => {
   const parsedTo = to.split(",");
 
   const msg = {
-    to: "holvoetwim@hotmail.com",
+    to: "holvoetwim@gmail.com",
     from: "info@trotkuurne.be", // Use your verified SendGrid email
     bcc: parsedTo,
     subject: `Trot 20-in-25`,

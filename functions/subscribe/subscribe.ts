@@ -59,7 +59,7 @@ export const handler: Handler = async (event, context) => {
   const msg = {
     to: email,
     from: "info@trotkuurne.be", // Use your verified SendGrid email
-    bcc: ["arne.quartier@hotmail.com", "holvoetwim@gmail.com"],
+    bcc: ["arne.quartier@hotmail.com"],
     subject: `Welkom, Kameraden van de ${groupName}!`,
     html: `
       <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">

@@ -15,10 +15,10 @@ export const handler: Handler = async (event, context) => {
   const parsedTo = to.split(",");
 
   const msg = {
-    to: "holvoetwim@gmail.com",
+    to: "holvoetwim@hotmail.com",
     from: "info@trotkuurne.be", // Use your verified SendGrid email
     bcc: parsedTo,
-    subject: `Trot 2025!`,
+    subject: `Trot 20-in-25`,
     html: `
       <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 500px;">
         <h1 style="color: #4CAF50;">Beste trotvrienden van de eerste, of eerder de latere uurtjes,</h1>

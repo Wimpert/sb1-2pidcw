@@ -65,7 +65,7 @@ export const handler: Handler = async (event, context) => {
       <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
         <h1 style="color: #4CAF50;">Hallo, ${groupName}!</h1>
         <p>Bedankt voor je inschrijving voor de trot 2025, je koos voor ${option}, heel moedig. </p>
-        <p>Je inschrijving is in goede orde ontvangen. De inschrijving is pas definitief na het overschrijven van €73,30 + €6 administrative kosten pp (voor jullie €${totalAmount}) op rekeningnummer  BE75 0688 9166 5251.</p>
+        <p>Je inschrijving is in goede orde ontvangen. De inschrijving is pas definitief na het overschrijven van €73,30 + €6 administratieve kosten pp (voor jullie €${totalAmount}) op rekeningnummer  BE75 0688 9166 5251.</p>
         <p>telefoonnummer: ${phone}
         <ul style="background-color: #f9f9f9; padding: 10px; border-radius: 5px; border: 1px solid #ddd;">
           ${participantsList}

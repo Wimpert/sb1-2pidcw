@@ -215,7 +215,7 @@ export class App {
   constructor(private http: HttpClient) {}
 
   addParticipant() {
-    if (this.registration.participants.length < 5) {
+    if (this.registration.participants.length < 6) {
       this.registration.participants.push("");
     }
   }

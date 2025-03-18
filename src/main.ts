@@ -22,7 +22,15 @@ interface Registration {
   imports: [FormsModule, CommonModule, BinComponent],
   providers: [],
   template: `
-    <a href="./assets/Route6_Soundtrack_Full_v1.mp3" download>Download link</a>
+    <div class="flex items-center justify-center min-h-screen">
+      <a
+        href="./assets/Route6_Soundtrack_Full_v1.mp3"
+        download
+        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-4 px-8 rounded-full text-center"
+      >
+        Download
+      </a>
+    </div>
 
     <!-- <div class="container mx-auto p-4 max-w-lg text-sky-800">
       @if (!submitted) {

@@ -22,7 +22,9 @@ interface Registration {
   imports: [FormsModule, CommonModule, BinComponent],
   providers: [],
   template: `
-    <div class="container mx-auto p-4 max-w-lg text-sky-800">
+    <a href="./assets/Route6_Soundtrack_Full_v1.mp3" download>Download link</a>
+
+    <!-- <div class="container mx-auto p-4 max-w-lg text-sky-800">
       @if (!submitted) {
 
       <h1 class="text-xl font-bold mb-4">Trot 20-in-25 Inschrijving:</h1>
@@ -192,7 +194,7 @@ interface Registration {
         </ul>
       </div>
       }
-    </div>
+    </div> -->
   `,
 })
 export class App {
